@@ -1,0 +1,305 @@
+/* base */
+/* Сброс стилей */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    }
+    /* Основные стили для тегов */
+    html {
+    font-size: 16px;
+    }
+    body {
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+    color: #333;
+    background-color: #fff;
+    }
+    a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    }
+    a:hover {
+    color: #666;
+    }
+    h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    margin-bottom: 1rem;
+    }
+    ul, ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    }
+    
+    /* Основные стили для контейнеров */
+    .h1-wrapper {
+    padding: 1rem;
+    background-color: #f8f8f8;
+    }
+    .contentblock {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    }
+    .wth-back {
+    background-color: #fff;
+    }
+    .horiz {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    }
+    .header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    }
+    .header-nav__item {
+    margin-left: 1rem;
+    }
+    .header-nav__item:first-child {
+    margin-left: 0;
+    }
+    .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    }
+    
+    /* Медиа-запросы */
+    @media (max-width: 768px) {
+    .header-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    }
+    .header-nav__item {
+    margin-top: 1rem;
+    margin-left: 0;
+    }
+    .h1-wrapper {
+    font-size: 2rem;
+    }
+    .contentblock {
+    padding: 1rem;
+    }
+    }
+
+/* index */
+    /* Основной контейнер */
+.problem-list {
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 900px;
+  }
+  
+  /* Заголовок */
+  .problem-list__title {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  /* Список проблем */
+  .problem-list__items {
+    list-style: none;
+    padding: 0;
+  }
+  
+  /* Элемент списка проблем */
+  .problem-item {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px #d9d9d9;
+    margin-bottom: 20px;
+    padding: 20px;
+  }
+  
+  /* Заголовок проблемы */
+  .problem-item__header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .problem-item__title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Кнопка редактирования проблемы */
+  .problem-item__edit-button {
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+  
+  /* Комментарии */
+  .comment-list__title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+  
+  /* Список комментариев */
+  .problem-item__comments {
+    list-style: none;
+    padding: 0;
+  }
+  
+  /* Элемент списка комментариев */
+  .comment-item {
+    margin-bottom: 10px;
+  }
+  
+  /* Заголовок комментария */
+  .comment-item__title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  /* Кнопка редактирования комментария */
+  .comment-item__edit-button {
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+  
+  /* Общие стили для некоторых элементов */
+  .problem-item__description,
+  .problem-item__class,
+  .problem-item__author,
+  .problem-item__assignee,
+  .problem-item__priority,
+  .problem-item__status,
+  .problem-item__created-date,
+  .problem-item__accepted-date,
+  .problem-item__started-at,
+  .problem-item__completed-at,
+  .problem-item__solution-result,
+  .comment-item__author,
+  .comment-item__created-date,
+  .comment-item__text {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  /* metriclistpage */
+  .system-report {
+    background-color: #f1f1f1;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .system-report__title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .system-report__items {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .system-report__item {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    flex-basis: calc(50% - 20px);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .system-report__item-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .system-report__item-details {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .system-report__metric {
+    flex-basis: calc(33.3333% - 10px);
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .system-report__metric-label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #666;
+  }
+  
+  .system-report__metric-value {
+    font-size: 16px;
+    color: #333;
+  }
+
+  /* metricpage */
+
+  .metricpage form {
+    background-color: #F8F8F8;
+    border: 1px solid #DDDDDD;
+    padding: 20px;
+    width: 500px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  .metricpage label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .metricpage input[type="text"],
+  .metricpage input[type="number"] {
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+    padding: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  
+  .metricpage input[type="submit"] {
+    background-color: #4CAF50;
+    border: none;
+    color: #FFFFFF;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .metricpage input[type="submit"]:hover {
+    background-color: #3E8E41;
+  }
+  
+  .metricpage p {
+    margin-bottom: 10px;
+  }
+  

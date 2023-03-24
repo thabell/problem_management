@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_class %}metriclistpage{% endblock %}
+
+{% block content %}
+
+<div class="system-report">
+    <div class="system-report__items">
+        {% for item in items %}
+        <div class="system-report__item">
+        <h3 class="system-report__item-title">Дата формирования отчета: {{ item.created_at }}</h3>
+        <div class="system-report__item-details">
+            <div class="system-report__metric">
+            <div class="system-report__metric-label">Количество решенных задач за последнюю неделю:</div>
+            <div class="system-report__metric-value">{{ item.num_solved_last_week }}</div>
+            </div>
+            <div class="system-report__metric">
+            <div class="system-report__metric-label">Количество нерешенных задач в настоящий момент:</div>
+            <div class="system-report__metric-value">{{ item.num_unsolved_now }}</div>
+            </div>
+            <div class="system-report__metric">
+            <div class="system-report__metric-label">Количество созданных задач за последнюю неделю:</div>
+            <div class="system-report__metric-value">{{ item.num_created_last_week }}</div>
+            </div>
+            <div class="system-report__metric">
+            <div class="system-report__metric-label">Коэффициент решенных задач за последнюю неделю:</div>
+            <div class="system-report__metric-value">{{ item.solved_last_week_ratio }}</div>
+            </div>
+            <div class="system-report__metric">
+            <div class="system-report__metric-label">Среднее время решения задач:</div>
+            <div class="system-report__metric-value">{{ item.avg_solve_time }}</div>
+            </div>
+            <div class="system-report__metric">
+            <div class="system-report__metric-label">Среднее время реакции на задачи:</div>
+            <div class="system-report__metric-value">{{ item.avg_reaction_time }}</div>
+            </div>
+        </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+  
+{% endblock content %}

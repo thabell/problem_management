@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_class %}indexpage{% endblock %}
+
+{% block content %}
+
+<div class="problem-list">
+    <h2 class="problem-list__title">Список проблем</h2>
+    <!-- <button class="problem-list__add-problem-button" type="button">Добавить проблему</button> -->
+    <ul class="problem-list__items">
+      {% for problem in problems %}
+      <li class="problem-item">
+        <div class="problem-item__header">
+          <h3 class="problem-item__title">Проблема от {{ problem.created_date }}</h3>
+          <!-- <button class="problem-item__edit-button" type="button">Редактировать</button> -->
+        </div>
+        <div class="problem-item__details">
+          <div class="problem-item__description">Описание проблемы: {{ problem.description }}</div>
+          <div class="problem-item__class">Класс проблемы: {{ problem.problem_class }}</div>
+          <div class="problem-item__author">Автор: {{ problem.author }}</div>
+          <div class="problem-item__assignee">Исполнитель: {{ problem.assignee }}</div>
+          <div style="background-color: {{ problem.priority.color }}33;" class="problem-item__priority">Приоритет: {{ problem.priority }}</div>
+          <div class="problem-item__status">Статус: {{ problem.status }}</div>
+          <div class="problem-item__created-date">Дата создания: {{ problem.created_date }}</div>
+          <div class="problem-item__accepted-date">Дата принятия в работу: {{ problem.accepted_date }}</div>
+          <div class="problem-item__started-at">Дата начала работы: {{ problem.started_at }}</div>
+          <div class="problem-item__completed-at">Дата завершения работы: {{ problem.completed_at }}</div>
+          <div class="problem-item__solution-result">Результат решения: {{ problem.solution_result }}</div>
+        </div>
+        {% if problem.comments.all|length > 0 %}
+        <h4 class="comment-list__title">Комментарии к проблеме</h2>
+        <ul class="problem-item__comments">
+            {% for comment in problem.comments.all %}
+          <li class="comment-item">
+            <div class="comment-item__header">
+                <h5 class="comment-item__title">Комментарий от {{ comment.created_date }}</h3>
+              <!-- <button class="comment-item__edit-button" type="button">Редактировать</button> -->
+            </div>
+            <div class="comment-item__author">Автор комментария: {{ comment.author }}</div>
+            <div class="comment-item__created-date">Дата создания: {{ comment.created_date }}</div>
+            <div class="comment-item__text">Текст комментария: {{ comment.text }}</div>
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        <!-- <button class="problem-item__add-comment-button" type="button">Добавить комментарий</button> -->
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+<!-- 
+<div class="popup__overlay"></div>
+<div class="popup problem-create-popup">
+    <div class="popup__header">
+      <h2 class="popup__title">Создать новую проблему</h2>
+      <button class="close-button problem-create-popup__close-button" type="button"></button>
+    </div>
+    <form class="problem-popup" method="POST">
+        <label class="problem-popup__label">Описание проблемы
+            <textarea class="problem-popup__description-input" name="description"></textarea>
+        </label>
+        <label class="problem-popup__label">Класс проблемы
+            comment <input class="problem-popup__class-input" type="text" name="problem_class">
+            <select class="problem-popup__class-input" name="problem_class">
+                {% for class in classes %}
+                    <option value="{{ class.id }}">{{ class.id }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <label class="problem-popup__label">Автор
+            <input class="problem-popup__author-input" type="text" name="author">
+        </label>
+        <label class="problem-popup__label">Ответственный
+            <input class="problem-popup__assignee-input" type="text" name="assignee">
+        </label>
+        <label class="problem-popup__label">Приоритет
+            <input class="problem-popup__priority-input" type="text" name="priority">
+        </label>
+        <label class="problem-popup__label">Статус
+            <input class="problem-popup__status-input" type="text" name="status">
+        </label>
+        <label class="problem-popup__label">Дата создания
+            <input class="problem-popup__created-date-input" type="date" name="created_date">
+        </label>
+        <label class="problem-popup__label">Дата принятия в работу
+            <input class="problem-popup__accepted-date-input" type="date" name="accepted_date">
+        </label>
+        <label class="problem-popup__label">Дата начала работы
+            <input class="problem-popup__started-at-input" type="date" name="started_at">
+        </label>
+        <label class="problem-popup__label">Дата завершения работы
+            <input class="problem-popup__completed-at-input" type="date" name="completed_at">
+        </label>
+        <label class="problem-popup__label">Результат решения
+            <textarea class="problem-popup__solution-result-input" name="solution_result"></textarea>
+        </label>
+        <div class="problem-popup__buttons">
+            <button class="cancel-button problem-create-popup__cancel-button" type="button">Отмена</button>
+            <button class="submit-button problem-create-popup__submit-button" type="submit">Добавить</button>
+        </div>
+    </form>
+</div>
+<div class="popup problem-edit-popup">
+    <div class="popup__header">
+        <h2 class="popup__title">Редактирование проблемы</h2>
+        <button class="close-button problem-edit-popup__close-button" type="button"></button>
+    </div>
+    <form class="problem-popup" method="POST">
+        <label class="problem-popup__label">Описание проблемы
+            <textarea class="problem-popup__description-input" name="description"></textarea>
+        </label>
+        <label class="problem-popup__label">Класс проблемы
+            <input class="problem-popup__class-input" type="text" name="problem_class">
+        </label>
+        <label class="problem-popup__label">Автор
+            <input class="problem-popup__author-input" type="text" name="author">
+        </label>
+        <label class="problem-popup__label">Ответственный
+            <input class="problem-popup__assignee-input" type="text" name="assignee">
+        </label>
+        <label class="problem-popup__label">Приоритет
+            <input class="problem-popup__priority-input" type="text" name="priority">
+        </label>
+        <label class="problem-popup__label">Статус
+            <input class="problem-popup__status-input" type="text" name="status">
+        </label>
+        <label class="problem-popup__label">Дата создания
+            <input class="problem-popup__created-date-input" type="date" name="created_date">
+        </label>
+        <label class="problem-popup__label">Дата принятия в работу
+            <input class="problem-popup__accepted-date-input" type="date" name="accepted_date">
+        </label>
+        <label class="problem-popup__label">Дата начала работы
+            <input class="problem-popup__started-at-input" type="date" name="started_at">
+        </label>
+        <label class="problem-popup__label">Дата завершения работы
+            <input class="problem-popup__completed-at-input" type="date" name="completed_at">
+        </label>
+        <label class="problem-popup__label">Результат решения
+            <textarea class="problem-popup__solution-result-input" name="solution_result"></textarea>
+        </label>
+        <div class="problem-popup__buttons">
+            <button class="cancel-button problem-edit-popup__cancel-button" type="button">Отмена</button>
+            <button class="submit-button problem-edit-popup__submit-button" type="submit">Сохранить</button>
+        </div>
+    </form>
+</div>
+<div class="popup comment-create-popup">
+    <div class="popup__header">
+      <h2 class="popup__title">Создать новый комментарий</h2>
+      <button class="close-button comment-create-popup__close-button" type="button"></button>
+    </div>
+    <form class="comment-popup" method="POST">
+        <div class="comment-item__header">
+            <h5 class="comment-item__title">Комментарий от {{ comment.created_date }}</h3>
+          <button class="comment-item__edit-button" type="button">Редактировать</button>
+        </div>
+        <div class="comment-item__author">Автор комментария: {{ comment.author }}</div>
+        <div class="comment-item__created-date">Дата создания: {{ comment.created_date }}</div>
+        <div class="comment-item__text">Текст комментария: {{ comment.text }}</div>
+
+        <label class="comment-popup__label">Описание проблемы
+            <textarea class="problem-popup__description-input" name="description"></textarea>
+        </label>
+        <label class="comment-popup__label">Класс проблемы
+            <input class="problem-popup__class-input" type="text" name="problem_class">
+        </label>
+        <label class="comment-popup__label">Автор
+            <input class="problem-popup__author-input" type="text" name="author">
+        </label>
+        <label class="comment-popup__label">Ответственный
+            <input class="problem-popup__assignee-input" type="text" name="assignee">
+        </label>
+        <label class="comment-popup__label">Приоритет
+            <input class="problem-popup__priority-input" type="text" name="priority">
+        </label>
+        <label class="comment-popup__label">Статус
+            <input class="problem-popup__status-input" type="text" name="status">
+        </label>
+        <label class="comment-popup__label">Дата создания
+            <input class="problem-popup__created-date-input" type="date" name="created_date">
+        </label>
+        <label class="comment-popup__label">Дата принятия в работу
+            <input class="problem-popup__accepted-date-input" type="date" name="accepted_date">
+        </label>
+        <label class="comment-popup__label">Дата начала работы
+            <input class="problem-popup__started-at-input" type="date" name="started_at">
+        </label>
+        <label class="comment-popup__label">Дата завершения работы
+            <input class="problem-popup__completed-at-input" type="date" name="completed_at">
+        </label>
+        <label class="comment-popup__label">Результат решения
+            <textarea class="problem-popup__solution-result-input" name="solution_result"></textarea>
+        </label>
+        <div class="comment-popup__buttons">
+            <button class="cancel-button comment-create-popup__cancel-button" type="button">Отмена</button>
+            <button class="submit-button comment-create-popup__submit-button" type="submit">Добавить</button>
+        </div>
+    </form>
+</div> -->
+{% endblock content %}

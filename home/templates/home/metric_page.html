@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_class %}metricpage{% endblock %}
+
+{% block content %}
+
+    <form action="." method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        <p><input type="submit" value="Создать метрику" name="save"> <input type="submit" value="Пересчитать значения метрик по дате" name="reculc"></p>
+    </form>
+  
+{% endblock content %}
