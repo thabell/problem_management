@@ -200,6 +200,35 @@
   
   /* metriclistpage */
   .system-report {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .system-report__item {
+    display: table-row;
+  }
+  
+  .system-report__metric {
+    display: table-cell;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  .system-report__metric-label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .system-report__metric-value {
+    color: #666;
+  }
+  .system-report__item:first-child {
+    background-color: #eee;
+  }
+  
+  
+  /* .system-report {
     background-color: #f1f1f1;
     padding: 20px;
     font-family: Arial, sans-serif;
@@ -253,7 +282,7 @@
   .system-report__metric-value {
     font-size: 16px;
     color: #333;
-  }
+  } */
 
   /* metricpage */
 
@@ -302,4 +331,6 @@
   .metricpage p {
     margin-bottom: 10px;
   }
-  
+  .errorlist {
+    color: red;
+  }

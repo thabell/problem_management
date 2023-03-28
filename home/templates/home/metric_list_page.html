@@ -1,44 +1,200 @@
 {% extends "base.html" %}
 {% load static %}
+{% load duration_filter %}
 
 {% block body_class %}metriclistpage{% endblock %}
 
 {% block content %}
-
+<h2>Количество решаемых проблем</h2>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<canvas id="myChart"></canvas>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for item in metrics %}'{{ item.created_at }}',{% endfor %}],
+            datasets: [{
+                label: 'Не решено на начало прошлой недели',
+                data: [{% for item in metrics %}{{ item.unsolved_last_week_start }},{% endfor %}],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            },{
+                label: 'Решено на прошлой неделе',
+                data: [{% for item in metrics %}{{ item.num_solved_last_week }},{% endfor %}],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            },{
+                label: 'Создано на прошлой неделе',
+                data: [{% for item in metrics %}{{ item.num_created_last_week }},{% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 206, 86, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 1
+            },{
+                label: 'Не решено на начало текущей недели',
+                data: [{% for item in metrics %}{{ item.num_unsolved_week_start }},{% endfor %}],
+                backgroundColor: [
+                    'rgba(153, 102, 255, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            },
+        ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+<br>
+<h2>Процент решаемых проблем</h2>
+<canvas id="myChart2"></canvas>
+<script>
+    var ctx = document.getElementById('myChart2').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for item in metrics %}'{{ item.created_at }}',{% endfor %}],
+            datasets: [{
+                label: 'Процент решенных проблем за прошлую неделю от общего числа нерешенных на начало прошлой недели',
+                data: [{% for item in metrics %}{{ item.solved_last_week_ratio|floatformat:"0" }},{% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }
+        ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+<br>
+<h2>Среднее время решаемых проблем, мин.</h2>
+<canvas id="myChart3"></canvas>
+<script>
+    var ctx = document.getElementById('myChart3').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for item in metrics %}'{{ item.created_at }}',{% endfor %}],
+            datasets: [{
+                label: 'Среднее время решения задачи на прошлой неделе',
+                data: [{% for item in metrics %}{{ item.avg_solve_time|duration_to_mins }},{% endfor %}],
+                backgroundColor: [
+                    'rgba(0, 204, 204, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(0, 204, 204, 1)'
+                ],
+                borderWidth: 1
+            },{
+                label: 'Среднее время реакции на задачу на прошлой неделе',
+                data: [{% for item in metrics %}{{ item.avg_reaction_time|duration_to_mins }},{% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 0, 255, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 0, 255, 1)'
+                ],
+                borderWidth: 1
+            }
+        ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+<br>
+<h2>Полные данные по оценкам системы и метрикам</h2>
 <div class="system-report">
-    <div class="system-report__items">
-        {% for item in items %}
-        <div class="system-report__item">
-        <h3 class="system-report__item-title">Дата формирования отчета: {{ item.created_at }}</h3>
-        <div class="system-report__item-details">
-            <div class="system-report__metric">
-            <div class="system-report__metric-label">Количество решенных задач за последнюю неделю:</div>
-            <div class="system-report__metric-value">{{ item.num_solved_last_week }}</div>
-            </div>
-            <div class="system-report__metric">
-            <div class="system-report__metric-label">Количество нерешенных задач в настоящий момент:</div>
-            <div class="system-report__metric-value">{{ item.num_unsolved_now }}</div>
-            </div>
-            <div class="system-report__metric">
-            <div class="system-report__metric-label">Количество созданных задач за последнюю неделю:</div>
-            <div class="system-report__metric-value">{{ item.num_created_last_week }}</div>
-            </div>
-            <div class="system-report__metric">
-            <div class="system-report__metric-label">Коэффициент решенных задач за последнюю неделю:</div>
-            <div class="system-report__metric-value">{{ item.solved_last_week_ratio }}</div>
-            </div>
-            <div class="system-report__metric">
-            <div class="system-report__metric-label">Среднее время решения задач:</div>
-            <div class="system-report__metric-value">{{ item.avg_solve_time }}</div>
-            </div>
-            <div class="system-report__metric">
-            <div class="system-report__metric-label">Среднее время реакции на задачи:</div>
-            <div class="system-report__metric-value">{{ item.avg_reaction_time }}</div>
-            </div>
+    <div class="system-report__item">
+        <div class="system-report__metric">
+        <div class="system-report__metric-label">Дата формирования отчета</div>
         </div>
+        <div class="system-report__metric">
+        <div class="system-report__metric-label">Не решено на начало прошлой недели</div>
         </div>
-        {% endfor %}
+        <div class="system-report__metric">
+        <div class="system-report__metric-label">Решено на прошлой неделе</div>
+        </div>
+        <div class="system-report__metric">
+        <div class="system-report__metric-label">Создано на прошлой неделе</div>
+        </div>
+        <div class="system-report__metric">
+        <div class="system-report__metric-label">Не решено на начало текущей недели</div>
+        </div>
+        <div class="system-report__metric">
+        <div class="system-report__metric-label">Процент решенных проблем за прошлую неделю от общего числа нерешенных на начало прошлой недели</div>
+        </div>
+        <div class="system-report__metric">
+        <div class="system-report__metric-label">Среднее время решения задачи на прошлой неделе</div>
+        </div>
+        <div class="system-report__metric">
+        <div class="system-report__metric-label">Среднее время реакции на задачу на прошлой неделе</div>
+        </div>
     </div>
+    {% for item in metrics_reverse %}
+    <div class="system-report__item">
+        <div class="system-report__metric">
+        <div class="system-report__metric-value">{{ item.created_at }}</div>
+        </div>
+        <div class="system-report__metric">
+        <div class="system-report__metric-value">{{ item.unsolved_last_week_start }}</div>
+        </div>
+        <div class="system-report__metric">
+        <div class="system-report__metric-value">{{ item.num_solved_last_week }}</div>
+        </div>
+        <div class="system-report__metric">
+        <div class="system-report__metric-value">{{ item.num_created_last_week }}</div>
+        </div>
+        <div class="system-report__metric">
+        <div class="system-report__metric-value">{{ item.num_unsolved_week_start }}</div>
+        </div>
+        <div class="system-report__metric">
+        <div class="system-report__metric-value">{{ item.solved_last_week_ratio }}</div>
+        </div>
+        <div class="system-report__metric">
+        <div class="system-report__metric-value">{{ item.avg_solve_time }}</div>
+        </div>
+        <div class="system-report__metric">
+        <div class="system-report__metric-value">{{ item.avg_reaction_time }}</div>
+        </div>
+    </div>
+    {% endfor %}
 </div>
-  
+
 {% endblock content %}
